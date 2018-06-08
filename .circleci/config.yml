@@ -23,6 +23,9 @@ jobs:
       - checkout
       - run: mvn dependency:go-offline
   deploy:
+    docker:
+      # specify the version you desire here
+      - image: circleci/openjdk:8-jdk
     steps:
       - run: mvn exec:java -Dexec.mainClass="org.apache.beam.examples.WordCount" -Dexec.args="--output=gs://vincegonzalez/tmp --runner=DataflowRunner"
         # - run: mvn integration-test 
