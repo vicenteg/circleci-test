@@ -37,11 +37,9 @@ jobs:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
         
-      # run tests!
-      - run: mvn integration-test
-
       - run:
           command: |
+            - mvn integration-test
             - mvn exec:java -Dexec.mainClass="org.apache.beam.examples.WordCount" -Dexec.args="--output=gs://vincegonzalez/tmp --runner=DataflowRunner"
 
 
