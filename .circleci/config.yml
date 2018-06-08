@@ -28,6 +28,7 @@ jobs:
       - image: circleci/openjdk:8-jdk
     working_directory: ~/repo
     steps:
+      - checkout
       - run: mvn exec:java -Dexec.mainClass="org.apache.beam.examples.WordCount" -Dexec.args="--output=gs://vincegonzalez/tmp --runner=DataflowRunner"
         # - run: mvn integration-test 
 
