@@ -30,7 +30,7 @@ jobs:
     steps:
       - checkout
       - run: echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > ${HOME}/gcloud-service-key.json
-      - run: mvn compile exec:java -Pdataflow-runner -Dexec.mainClass="org.apache.beam.examples.WordCount" -Dexec.args="--project=bq-workshop-160115 --output=gs://vincegonzalez/tmp --runner=DataflowRunner"
+      - run: mvn compile exec:java -Pdataflow-runner -Dexec.mainClass="org.apache.beam.examples.WordCount" -Dexec.args="--project=bq-workshop-160115 --tmpLocation=gs://vincegonzalez/tmp --output=gs://vincegonzalez/tmp --runner=DataflowRunner"
 
 workflows:
   version: 2
