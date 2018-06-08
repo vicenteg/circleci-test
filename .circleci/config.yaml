@@ -39,7 +39,6 @@ jobs:
         
       - run:
           command: |
-            - mvn integration-test
-            - mvn exec:java -Dexec.mainClass="org.apache.beam.examples.WordCount" -Dexec.args="--output=gs://vincegonzalez/tmp --runner=DataflowRunner"
+            - mvn integration-test exec:java -Dexec.mainClass="org.apache.beam.examples.WordCount" -Dexec.args="--output=gs://vincegonzalez/tmp --runner=DataflowRunner"
 
 
