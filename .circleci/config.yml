@@ -1,42 +1,27 @@
-# Java Maven CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-java/ for more details
-#
 version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
-      - image: circleci/openjdk:8-jdk
-      
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
+    - image: circleci/openjdk:8-jdk
     working_directory: ~/repo
-
     environment:
       MAVEN_OPTS: -Xmx3200m
-    
     steps:
-      - checkout
-      - run: mvn --batch-mode dependency:go-offline
+    - checkout
+    - run: mvn --batch-mode dependency:go-offline
   deploy:
     docker:
-      # specify the version you desire here
-      - image: circleci/openjdk:8-jdk
+    - image: circleci/openjdk:8-jdk
     working_directory: ~/repo
     steps:
-      - checkout
-      - run: echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > ${HOME}/gcloud-service-key.json
-      - run: mvn --batch-mode compile exec:java -Pdataflow-runner -Dexec.mainClass="org.apache.beam.examples.WordCount" -Dexec.args="--project=bq-workshop-160115 --tempLocation=gs://vincegonzalez/tmp --output=gs://vincegonzalez/tmp --usePublicIps=false --runner=DataflowRunner"
-
+    - checkout
+    - run: echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > ${HOME}/gcloud-service-key.json
+    - run: mvn --batch-mode compile exec:java -Pdataflow-runner -Dexec.mainClass="org.apache.beam.examples.WordCount" -Dexec.args="--project=bq-workshop-160115 --tempLocation=gs://vincegonzalez/tmp --output=gs://vincegonzalez/tmp --usePublicIps=false --runner=DataflowRunner"
 workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build
-      - deploy:
-          requires:
-            - build
+    - build
+    - deploy:
+        requires:
+        - build
